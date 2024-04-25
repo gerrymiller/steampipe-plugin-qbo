@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-steampipe-plugin-teamwork
+steampipe-plugin-qbo
 
 # Test binary, built with `go test -c`
 *.test
