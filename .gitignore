@@ -1,0 +1,27 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+steampipe-plugin-teamwork
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Dependency directories (remove the comment below to include it)
+# vendor/
+
+# Ignore swap files
+*.swn
+*.swo
+*.swp
+
+# Ignore Desktop Services Store files
+.DS_Store
+
+# Ignore file types
+.vscode/
