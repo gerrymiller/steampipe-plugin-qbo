@@ -6,18 +6,12 @@ import (
 )
 
 type qboConfig struct {
-	BaseURL *string `cty:"baseURL"`
 	ClientId *string `cty:"clientId"`
     ClientSecret *string `cty:"clientSecret"`
     RealmId *string `cty:"realmId"`
-	RefreshToken *string `cty:"refreshToken"`
-	IdToken *string `cty:"idToken"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
-	"baseURL": {
-		Type: schema.TypeString,
-	},
 	"clientId": {
 		Type: schema.TypeString,
 	},
@@ -25,12 +19,6 @@ var ConfigSchema = map[string]*schema.Attribute{
 		Type: schema.TypeString,
 	},
 	"realmId": {
-		Type: schema.TypeString,
-	},
-	"refreshToken" : {
-		Type: schema.TypeString,
-	},
-	"idToken" : {
 		Type: schema.TypeString,
 	},
 }

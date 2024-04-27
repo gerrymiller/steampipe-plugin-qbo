@@ -24,17 +24,17 @@ Get information about the Quickbooks Online company:
 ```sql
 select
   id,
-  name
+  company_name
 from
   qbo_company_info;
 ```
 
 ```
-+----+-------------+
-| id | name        | 
-+----+-------------+
-| 1  | Cloudticity | 
-+----+-------------+
++----+--------------+
+| id | company_name | 
++----+--------------+
+| 1  | Cloudticity  | 
++----+--------------+
 ```
 
 ## Documentation
@@ -63,23 +63,7 @@ Configure your file paths in `~/.steampipe/config/qbo.spc`:
 
 ```hcl
 connection "qbo" {
-   plugin = "qbo"
+  plugin = "qbo"
 
-    # The base URL to call for access to the QBO API.
-    baseURL = ""
-
-    # Client ID issued by the QBO developer portal.
-    clientId = ""
-
-    # Client Secret issued by the QBO developer portal.
-    clientSecret = ""
-
-    # Realm ID issued by the QBO developer portal. This is equivalent
-    # to the Company ID, and the terms are used interchangably.
-    realmId = ""
-
-    # The initial refresh token from the QBO developer portal. This will
-    # need to be refreshed regularly, usually every 101 days
-    refreshToken = ""
 }
 ```
