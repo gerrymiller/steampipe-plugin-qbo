@@ -19,15 +19,15 @@ Discover information about the Company that owns the QBO account.
 ```sql
 select
   id,
-  company_name
+  name
 from
   qbo_company_info;
 ```
 
 ```
-+----+--------------+
-| id | company_name | 
-+----+--------------+
-| 1  | Cloudticity  | 
-+----+--------------+
++----+-------------+
+| id | name        | 
++----+-------------+
+| 1  | Cloudticity | 
++----+-------------+
 ```
