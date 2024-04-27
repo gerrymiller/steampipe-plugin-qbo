@@ -10,8 +10,8 @@ type qboConfig struct {
 	ClientId *string `cty:"clientId"`
     ClientSecret *string `cty:"clientSecret"`
     RealmId *string `cty:"realmId"`
-	AccessToken *string `cty:"accessToken"`
 	RefreshToken *string `cty:"refreshToken"`
+	IdToken *string `cty:"idToken"`
 }
 
 var ConfigSchema = map[string]*schema.Attribute{
@@ -27,10 +27,10 @@ var ConfigSchema = map[string]*schema.Attribute{
 	"realmId": {
 		Type: schema.TypeString,
 	},
-	"accessToken": {
+	"refreshToken" : {
 		Type: schema.TypeString,
 	},
-	"refreshToken": {
+	"idToken" : {
 		Type: schema.TypeString,
 	},
 }
