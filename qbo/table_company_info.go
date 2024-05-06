@@ -1,16 +1,10 @@
-
 package qbo
 
 import (
-	"fmt"
-	"time"
 	"context"
-	"net/http"
-	"encoding/json"
+	"fmt"
 
-	"golang.org/x/oauth2"
-
- 	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
+	"github.com/turbot/steampipe-plugin-sdk/v5/grpc/proto"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
@@ -49,49 +43,49 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("CompanyName").NullIfZero(),
 			},
 			{
-				Name:        "address_line1",
-				Type:        proto.ColumnType_STRING,
+				Name: "address_line1",
+				Type: proto.ColumnType_STRING,
 				Description: `Company Address as described in preference.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CompanyAddress.Line1").NullIfZero(),
+				Transform: transform.FromField("CompanyAddress.Line1").NullIfZero(),
 			},
 			{
-				Name:        "address_line2",
-				Type:        proto.ColumnType_STRING,
+				Name: "address_line2",
+				Type: proto.ColumnType_STRING,
 				Description: `Company Address as described in preference.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CompanyAddress.Line2").NullIfZero(),
+				Transform: transform.FromField("CompanyAddress.Line2").NullIfZero(),
 			},
 			{
-				Name:        "address_line3",
-				Type:        proto.ColumnType_STRING,
+				Name: "address_line3",
+				Type: proto.ColumnType_STRING,
 				Description: `Company Address as described in preference.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CompanyAddress.Line3").NullIfZero(),
+				Transform: transform.FromField("CompanyAddress.Line3").NullIfZero(),
 			},
 			{
-				Name:        "address_line4",
-				Type:        proto.ColumnType_STRING,
+				Name: "address_line4",
+				Type: proto.ColumnType_STRING,
 				Description: `Company Address as described in preference.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CompanyAddress.Line4").NullIfZero(),
+				Transform: transform.FromField("CompanyAddress.Line4").NullIfZero(),
 			},
 			{
-				Name:        "address_line5",
-				Type:        proto.ColumnType_STRING,
+				Name: "address_line5",
+				Type: proto.ColumnType_STRING,
 				Description: `Company Address as described in preference.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CompanyAddress.Line5").NullIfZero(),
+				Transform: transform.FromField("CompanyAddress.Line5").NullIfZero(),
 			},
 			{
 				Name:        "address_city",
@@ -124,49 +118,49 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("CompanyAddress.Longitude").NullIfZero(),
 			},
 			{
-				Name:        "legal_address_line1",
-				Type:        proto.ColumnType_STRING,
+				Name: "legal_address_line1",
+				Type: proto.ColumnType_STRING,
 				Description: `Legal Address given to the government for any government communication.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("LegalAddress.Line1").NullIfZero(),
+				Transform: transform.FromField("LegalAddress.Line1").NullIfZero(),
 			},
 			{
-				Name:        "legal_address_line2",
-				Type:        proto.ColumnType_STRING,
+				Name: "legal_address_line2",
+				Type: proto.ColumnType_STRING,
 				Description: `Legal Address given to the government for any government communication.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("LegalAddress.Line2").NullIfZero(),
+				Transform: transform.FromField("LegalAddress.Line2").NullIfZero(),
 			},
 			{
-				Name:        "legal_address_line3",
-				Type:        proto.ColumnType_STRING,
+				Name: "legal_address_line3",
+				Type: proto.ColumnType_STRING,
 				Description: `Legal Address given to the government for any government communication.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("LegalAddress.Line3").NullIfZero(),
+				Transform: transform.FromField("LegalAddress.Line3").NullIfZero(),
 			},
 			{
-				Name:        "legal_address_line4",
-				Type:        proto.ColumnType_STRING,
+				Name: "legal_address_line4",
+				Type: proto.ColumnType_STRING,
 				Description: `Legal Address given to the government for any government communication.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("LegalAddress.Line4").NullIfZero(),
+				Transform: transform.FromField("LegalAddress.Line4").NullIfZero(),
 			},
 			{
-				Name:        "legal_address_line5",
-				Type:        proto.ColumnType_STRING,
+				Name: "legal_address_line5",
+				Type: proto.ColumnType_STRING,
 				Description: `Legal Address given to the government for any government communication.
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("LegalAddress.Line5").NullIfZero(),
+				Transform: transform.FromField("LegalAddress.Line5").NullIfZero(),
 			},
 			{
 				Name:        "legal_address_city",
@@ -199,49 +193,49 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 				Transform:   transform.FromField("LegalAddress.Longitude").NullIfZero(),
 			},
 			{
-				Name:        "communication_address_line1",
-				Type:        proto.ColumnType_STRING,
+				Name: "communication_address_line1",
+				Type: proto.ColumnType_STRING,
 				Description: `Address of the company as given to their customer, sometimes the address given to the customer mail address is different from Company address. 
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CustomerCommunicationAddress.Line1").NullIfZero(),
+				Transform: transform.FromField("CustomerCommunicationAddress.Line1").NullIfZero(),
 			},
 			{
-				Name:        "communication_address_line2",
-				Type:        proto.ColumnType_STRING,
+				Name: "communication_address_line2",
+				Type: proto.ColumnType_STRING,
 				Description: `Address of the company as given to their customer, sometimes the address given to the customer mail address is different from Company address. 				
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CustomerCommunicationAddress.Line2").NullIfZero(),
+				Transform: transform.FromField("CustomerCommunicationAddress.Line2").NullIfZero(),
 			},
 			{
-				Name:        "communication_address_line3",
-				Type:        proto.ColumnType_STRING,
+				Name: "communication_address_line3",
+				Type: proto.ColumnType_STRING,
 				Description: `Address of the company as given to their customer, sometimes the address given to the customer mail address is different from Company address. 
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CustomerCommunicationAddress.Line3").NullIfZero(),
+				Transform: transform.FromField("CustomerCommunicationAddress.Line3").NullIfZero(),
 			},
 			{
-				Name:        "communication_address_line4",
-				Type:        proto.ColumnType_STRING,
+				Name: "communication_address_line4",
+				Type: proto.ColumnType_STRING,
 				Description: `Address of the company as given to their customer, sometimes the address given to the customer mail address is different from Company address. 
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CustomerCommunicationAddress.Line4").NullIfZero(),
+				Transform: transform.FromField("CustomerCommunicationAddress.Line4").NullIfZero(),
 			},
 			{
-				Name:        "communication_address_line5",
-				Type:        proto.ColumnType_STRING,
+				Name: "communication_address_line5",
+				Type: proto.ColumnType_STRING,
 				Description: `Address of the company as given to their customer, sometimes the address given to the customer mail address is different from Company address. 
 				If a physical address is updated from within the transaction object, the QuickBooks Online API flows individual address components differently into the Line elements of the transaction response then when the transaction was first created:
 				Line1 and Line2 elements are populated with the customer name and company name.
 				Original Line1 through Line 5 contents, City, SubDivisionCode, and PostalCode flow into Line3 through Line5as a free format strings.`,
-				Transform:   transform.FromField("CustomerCommunicationAddress.Line5").NullIfZero(),
+				Transform: transform.FromField("CustomerCommunicationAddress.Line5").NullIfZero(),
 			},
 			{
 				Name:        "communication_address_city",
@@ -299,8 +293,8 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 			},
 			// TODO: Maybe flatten this out?
 			{
-				Name:        "attributes",
-				Type:        proto.ColumnType_JSON,
+				Name: "attributes",
+				Type: proto.ColumnType_JSON,
 				Description: `Any other preference not covered with the standard set of attributes. See Data Services Extensions, below, for special reserved name/value pairs. NameValue.Name--Name of the element. NameValue.Value--Value of the element.
 				NeoEnabled
 				The type of company, classic or Harmony.
@@ -381,7 +375,7 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 				Property to determine whether the company is 'NonTracking' enabled. Based on this flag, the appropriate fields should be used while querying General Ledger or Profilt and Loss Detail report.
 				true is Enabled.
 				false is Disabled.`,
-				Transform:   transform.FromField("Attributes").NullIfZero(),
+				Transform: transform.FromField("Attributes").NullIfZero(),
 			},
 			{
 				Name:        "primary_phone",
@@ -417,183 +411,24 @@ func tableQBOCompanyInfo(ctx context.Context) *plugin.Table {
 	}
 }
 
-func attributesToJson(ctx context.Context, d *transform.TransformData) (interface{}, error) {
-    companyInfo, ok := d.Value.(*CompanyInfo)
-    if !ok {
-        return nil, nil // or error, depending on your error handling policy
-    }
-    
-    jsonData, err := json.Marshal(companyInfo.Attributes)
-    if err != nil {
-        return nil, err
-    }
-    
-    return string(jsonData), nil
-}
-
-
-func getDiscoveryDocument(url string) (*DiscoveryDocument, error) {
-    resp, err := http.Get(url)
-    if err != nil {
-        return nil, fmt.Errorf("error fetching discovery document: %v", err)
-    }
-    defer resp.Body.Close()
-
-    if resp.StatusCode != http.StatusOK {
-        return nil, fmt.Errorf("received non-200 response code: %d", resp.StatusCode)
-    }
-
-    var doc DiscoveryDocument
-    err = json.NewDecoder(resp.Body).Decode(&doc)
-    if err != nil {
-        return nil, fmt.Errorf("error decoding discovery document: %v", err)
-    }
-
-    return &doc, nil
-}
-
-// TODO: figure out how to cache the token and discovery document
-func getCompanyInfo(config *qboConfig) (*CompanyInfo, error) {
-	discoveryDoc, err := getDiscoveryDocument("https://developer.api.intuit.com/.well-known/openid_sandbox_configuration")
-	if err != nil {
-		return nil, fmt.Errorf("error getting discover doc: %v", err)
-	}
-
-	oauth2Config := &oauth2.Config{
-		ClientID:     *config.ClientId,
-		ClientSecret: *config.ClientSecret,
-		Endpoint: oauth2.Endpoint{
-			TokenURL: discoveryDoc.TokenEndpoint, // Token endpoint for refresh
-		},
-		// Optionally include Scopes if required:
-		// Scopes: []string{"scope1", "scope2"},
-	}
-
-    token := &oauth2.Token{
-		RefreshToken: *config.RefreshToken,
-		TokenType:    "Bearer",
-		// Expiry is important for the client to know when to refresh the token
-		Expiry: time.Now().Add(-24 * time.Hour), // Set to past to trigger refresh immediately
-	}
-	
-	// Create a token source from the token
-	tokenSource := oauth2Config.TokenSource(context.Background(), token)
-	
-	client := oauth2.NewClient(context.Background(), tokenSource)
-	request, err := http.NewRequest("GET", fmt.Sprintf("%s/v3/company/%s/companyinfo/%s", 
-	*config.BaseURL, *config.RealmId, *config.RealmId), nil)
-	if err != nil {
-        return nil, fmt.Errorf("unable to create an https request: %v", err)
-	}
-
-	request.Header.Set("Accept", "application/json")  // Requests JSON content
-
-	response, err := client.Do(request)
-	if err != nil {
-        return nil, fmt.Errorf("error requesting content from server: %v", err)
-	}
-	defer response.Body.Close()
-
-	if(response.StatusCode != 200) {
-		return nil, fmt.Errorf("request rejected by server: %v", response)
-	}
-
-	var companyInfo ApiCompanyInfo	
-	err = json.NewDecoder(response.Body).Decode(&companyInfo)
-	if err != nil {
-        return nil, fmt.Errorf("error decoding company info response: %v", err)
-    }
-
-	return &companyInfo.CompanyInfo, nil
-}
-
 func listQBOCompanyInfo(
 	ctx context.Context,
 	d *plugin.QueryData,
 	_ *plugin.HydrateData,
 ) (interface{}, error) {
-	
-	config := GetConfig(d.Connection)
-	companyInfo, err := getCompanyInfo(&config)
-    if err != nil {
-        return nil, fmt.Errorf("Failed to get company info: %v", err)
-    }
 
-	plugin.Logger(ctx).Info("Company Info: ", companyInfo)
-	d.StreamListItem(ctx, *companyInfo)
+	companyInfoApi := new(ApiCompanyInfo)
+	_, err := qboApiCall(&companyInfoApi,
+		"%s/v3/company/%s/companyinfo/%s",
+		ctx,
+		d,
+		nil,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get company info: %v", err)
+	}
+
+	plugin.Logger(ctx).Info("Company Info: ", companyInfoApi.GetResponse())
+	d.StreamListItem(ctx, *companyInfoApi.GetResponse())
 	return nil, nil
-}
-
-type DiscoveryDocument struct {
-	Issuer                 			  string   `json:"issuer"`
-	AuthorizationEndpoint  			  string   `json:"authorization_endpoint"`
-	TokenEndpoint          			  string   `json:"token_endpoint"`
-	UserinfoEndpoint       			  string   `json:"userinfo_endpoint"`
-	RevocationEndpoint     			  string   `json:"revocation_endpoint"`
-	JwksUri                			  string   `json:"jwks_uri"`
-	ResponseTypesSupported 			  []string `json:"response_types_supported"`
-	IdTokenSigningALGValuesSupported  []string `json"id_token_signing_alg_values_supported"`
-	ScopesSupported  				  []string `json:"scopes_supported"`
-	TokenEndpointAuthMethodsAupported []string `json:"token_endpoint_auth_methods_supported"`
-	ClaimsSupported     			  []string `json:"claims_supported"`
-}
-
-type ApiCompanyInfo struct {
-	CompanyInfo CompanyInfo `json:"CompanyInfo"`
-}
-
-type CompanyInfo struct {
-	ID string `json:"Id"`
-	SyncToken string `json:"SyncToken"`
-	CompanyName string `json:"CompanyName"`
-	CompanyAddress PhysicalAddress `json:"CompanyAddr"`
-	LegalAddress PhysicalAddress `json:"LegalAddr"`
-	CustomerCommunicationAddress PhysicalAddress `json:"CustomerCommunicationAddr"`
-	SupportedLanguages string `json:"SupportedLanguages"`
-	Country string `json:"Country"`
-	Email EmailAddress `json:"Email"`
-	Web WebSiteAddress `json:"WebAddr"`
-	Attributes []NameValue `json:"NameValue"`
-	FiscalYearStartMonth string `json:"FiscalYearStartMonth"`
-	PrimaryPhone TelephoneNumber `json:"PrimaryPhone"`
-	LegalName string `json:"LegalName"`
-	MetaData MetaData `json:"MetaData"`
-	CompanyStartDate string `json:"CompanyStartDate"`
-}
-
-type PhysicalAddress struct {
-	ID string `json:"Id"`
-	Line1 string `json:"Line1"`
-	Line2 string `json:"Line2"`
-	Line3 string `json:"Line3"`
-	Line4 string `json:"Line4"`
-	Line5 string `json:"Line5"`
-	City string `json:"City"`
-	Region string `json:"CountrySubDivisionCode"`
-	PostalCode string `json:"PostalCode"`
-	Country string `json:"Country"`
-	Latitude string `json:"Lat"`
-	Longitude string `json:"Long"`
-}
-
-type TelephoneNumber struct {
-	FreeFormNumber string `json:"FreeFormNumber"`
-}
-
-type EmailAddress struct {
-	Address string `json:"Address"`
-}
-
-type WebSiteAddress struct {
-	URI string `json:"URI"`
-}
-
-type NameValue struct {
-	Name string `json:"Name"`
-	Value string `json:"Value"`
-}
-
-type MetaData struct {
-	CreateTime string `json:"CreateTime"`
-	LastUpdatedTime string `json:"LastUpdatedTime"`
 }
