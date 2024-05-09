@@ -25,7 +25,14 @@ Configure your config file in `~/.steampipe/config/qbo.spc`:
 connection "qbo" {
   plugin = "qbo"
 
-}
+  # Sandbox configuration
+  baseURL = "https://sandbox-quickbooks.api.intuit.com"
+  discoveryDocumentURL = "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration"
+  clientId = "[Client ID]"
+  clientSecret = "[Client Secret]"
+  realmId = "[Realm ID]"
+  accessToken = "[Access Token]"
+  refreshToken = "[Refresh Token]"}
 ```
 
 Run steampipe:

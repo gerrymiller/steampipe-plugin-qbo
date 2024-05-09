@@ -5,46 +5,48 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sync"
 	"time"
 
 	"golang.org/x/oauth2"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
-	"github.com/turbot/steampipe-plugin-sdk/v5/plugin/transform"
 )
 
-func attributesToJson(ctx context.Context, d *transform.TransformData) (interface{}, error) {
-	companyInfo, ok := d.Value.(*CompanyInfo)
-	if !ok {
-		return nil, nil // or error, depending on your error handling policy
-	}
+// Global variable to hold state
+var globalState sync.Map
 
-	jsonData, err := json.Marshal(companyInfo.Attributes)
-	if err != nil {
-		return nil, err
-	}
-
-	return string(jsonData), nil
-}
-
-func getDiscoveryDocument(url string) (*DiscoveryDocument, error) {
+func getDiscoveryDocument(url string) (DiscoveryDocument, error) {
+	var doc DiscoveryDocument
 	resp, err := http.Get(url)
 	if err != nil {
-		return nil, fmt.Errorf("error fetching discovery document: %v", err)
+		return doc, fmt.Errorf("error fetching discovery document: %v", err)
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("received non-200 response code: %d", resp.StatusCode)
+		return doc, fmt.Errorf("received non-200 response code: %d", resp.StatusCode)
 	}
 
-	var doc DiscoveryDocument
 	err = json.NewDecoder(resp.Body).Decode(&doc)
 	if err != nil {
-		return nil, fmt.Errorf("error decoding discovery document: %v", err)
+		return doc, fmt.Errorf("error decoding discovery document: %v", err)
 	}
 
-	return &doc, nil
+	return doc, nil
+}
+
+func getCacheValue[T any](key string) (T, bool) {
+	value, exists := globalState.Load(key)
+	if !exists {
+		var empty T
+		return empty, false
+	}
+	return value.(T), true
+}
+
+func setCacheValue[T any](key string, value T) {
+	globalState.Store(key, value)
 }
 
 // TODO: figure out how to cache the token and discovery document (context?)
@@ -57,34 +59,58 @@ func qboApiCall[T any](apiResponse *T,
 
 	config := GetConfig(d.Connection)
 
-	discoveryDoc, err := getDiscoveryDocument("https://developer.api.intuit.com/.well-known/openid_sandbox_configuration")
-	if err != nil {
-		return nil, fmt.Errorf("error getting discover doc: %v", err)
+	var tokenSource oauth2.TokenSource
+	if cached, exists := getCacheValue[oauth2.TokenSource]("tokenSource"); exists {
+		tokenSource = cached
+	} else {
+		var oauth2Config oauth2.Config
+		if cached, exists := getCacheValue[oauth2.Config]("oauth2Config"); exists {
+			oauth2Config = cached
+		} else {
+			var discoveryDoc DiscoveryDocument
+			if cached, exists := getCacheValue[DiscoveryDocument]("discoveryDoc"); exists {
+				discoveryDoc = cached
+			} else {
+				returnedDoc, err := getDiscoveryDocument(*config.DiscoveryDocumentURL)
+				if err != nil {
+					return nil, fmt.Errorf("error getting discover doc: %v", err)
+				}
+				discoveryDoc = returnedDoc
+				setCacheValue("discoveryDoc", discoveryDoc)
+			}
+			oauth2Config = oauth2.Config{
+				ClientID:     *config.ClientId,
+				ClientSecret: *config.ClientSecret,
+				Endpoint: oauth2.Endpoint{
+					TokenURL: discoveryDoc.TokenEndpoint, // Token endpoint for refresh
+				},
+				// Optionally include Scopes if required:
+				// Scopes: []string{"scope1", "scope2"},
+			}
+			setCacheValue("oauth2Config", oauth2Config)
+		}
+
+		token := &oauth2.Token{
+			AccessToken:  *config.AccessToken,
+			RefreshToken: *config.RefreshToken,
+			TokenType:    "Bearer",
+			// Expiry is important for the client to know when to refresh the token
+			Expiry: time.Now().Add(-time.Hour), // Set to past to trigger refresh immediately
+		}
+
+		// Create a token source from the token
+		tokenSource = oauth2Config.TokenSource(context.Background(), token)
+
+		setCacheValue("tokenSource", tokenSource)
 	}
 
-	oauth2Config := &oauth2.Config{
-		ClientID:     *config.ClientId,
-		ClientSecret: *config.ClientSecret,
-		Endpoint: oauth2.Endpoint{
-			TokenURL: discoveryDoc.TokenEndpoint, // Token endpoint for refresh
-		},
-		// Optionally include Scopes if required:
-		// Scopes: []string{"scope1", "scope2"},
-	}
-
-	token := &oauth2.Token{
-		RefreshToken: *config.RefreshToken,
-		TokenType:    "Bearer",
-		// Expiry is important for the client to know when to refresh the token
-		Expiry: time.Now().Add(-time.Hour), // Set to past to trigger refresh immediately
-	}
-
-	// Create a token source from the token
-	tokenSource := oauth2Config.TokenSource(context.Background(), token)
-	_, err = tokenSource.Token()
+	// Force refresh if neccessary
+	_, err := tokenSource.Token()
 	if err != nil {
 		return nil, fmt.Errorf("error getting token: %v", err)
 	}
+	// Update cache if tokenSource has been updated
+	setCacheValue("tokenSource", tokenSource)
 
 	client := oauth2.NewClient(context.Background(), tokenSource)
 	request, err := http.NewRequest("GET", fmt.Sprintf(urlQuery,
