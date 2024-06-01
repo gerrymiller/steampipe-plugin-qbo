@@ -1,11 +1,7 @@
 package qbo
 
-type ApiReport struct {
-	Report Report
-}
-
-func (apiResponse *ApiReport) GetResponse() *Report {
-	return &apiResponse.Report
+func (apiResponse *Report) GetResponse() *Report {
+	return apiResponse
 }
 
 type Report struct {

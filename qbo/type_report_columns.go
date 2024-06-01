@@ -5,7 +5,7 @@ type Columns struct {
 }
 
 type Column struct {
-	ColType  string     `json:"ColType"`
-	ColTitle string     `json:"ColTitle"`
-	MetaData []MetaData `json:"MetaData"`
+	ColType  string      `json:"ColType"`
+	ColTitle string      `json:"ColTitle"`
+	MetaData []NameValue `json:"MetaData"`
 }
