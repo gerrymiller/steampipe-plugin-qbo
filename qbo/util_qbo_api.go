@@ -1,6 +1,7 @@
 package qbo
 
 import (
+	"bytes"
 	"context"
 	"encoding/base64"
 	"encoding/json"
@@ -10,6 +11,7 @@ import (
 	"net/url"
 	"strings"
 	"sync"
+	"text/template"
 	"time"
 
 	"github.com/turbot/steampipe-plugin-sdk/v5/plugin"
@@ -185,8 +187,25 @@ func qboApiCall[T any](apiResponse *T,
 		endpoint:     discoveryDoc.TokenEndpoint,
 	}
 
-	request, err := http.NewRequest("GET", fmt.Sprintf(urlQuery,
-		*config.BaseURL, *config.RealmId, *config.RealmId), nil)
+	// TODO: Have to figure out how to handle differently formatted URLs
+	templateData := map[string]interface{}{
+		"baseURL": *config.BaseURL,
+		"realmId": *config.RealmId,
+	}
+
+	tmpl, err := template.New("url").Parse(urlQuery)
+	if err != nil {
+		return nil, fmt.Errorf("error parsing url template: %v", err)
+	}
+
+	var output bytes.Buffer
+
+	err = tmpl.Execute(&output, templateData)
+	if err != nil {
+		return nil, fmt.Errorf("error executing url template: %v", err)
+	}
+
+	request, err := http.NewRequest("GET", output.String(), nil)
 	if err != nil {
 		return nil, fmt.Errorf("unable to create an https request: %v", err)
 	}

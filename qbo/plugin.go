@@ -16,7 +16,8 @@ func Plugin(ctx context.Context) *plugin.Plugin {
 			Schema:      ConfigSchema,
 		},
 		TableMap: map[string]*plugin.Table{
-			"qbo_company_info": tableQBOCompanyInfo(ctx),
+			"qbo_company_info":           tableQBOCompanyInfo(ctx),
+			"qbo_profit_and_loss_report": tableQBOProfitAndLossReport(ctx),
 		},
 	}
 	return p
