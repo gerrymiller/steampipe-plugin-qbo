@@ -1,5 +1,7 @@
 ![image](https://www.cloudticity.com/hubfs/Cloudticity_Logo_2020%20(1).png#keepProtocol)
 
+![CodeQL](https://github.com/Cloudticity/steampipe-plugin-qbo/actions/workflows/codeql-analysis.yml/badge.svg)
+
 # Quickbooks Online Plugin for Steampipe
 
 Use SQL to query accounting data from QuickBooks Online (QBO).
