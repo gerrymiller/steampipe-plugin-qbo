@@ -17,8 +17,7 @@ updates:
     labels:
       - "dependencies"
     target-branch: "develop"
-    allow:
-      - dependency-type: "all"
+    open-pull-requests-limit: 10
     security-updates: true
 
   # Regular updates for production dependencies in the develop branch
@@ -33,10 +32,9 @@ updates:
     labels:
       - "dependencies"
     target-branch: "develop"
-    allow:
-      - dependency-type: "all"
+    open-pull-requests-limit: 10
 
-  # Security updates for development dependencies in the develop branch
+      # Security updates for production dependencies in the main branch
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
@@ -47,22 +45,28 @@ updates:
       - "gerrymiller"
     labels:
       - "dependencies"
-    target-branch: "develop"
+    target-branch: "main"
     allow:
       - dependency-type: "all"
+    ignore:
+      - dependency-name: "*"
+    open-pull-requests-limit: 0
     security-updates: true
 
-  # Regular updates for development dependencies in the develop branch
+  # Regular updates for production dependencies in the main branch
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
       interval: "weekly"
-        pull-request-branch-name:
+    pull-request-branch-name:
       separator: "-"
     assignees:
       - "gerrymiller"
     labels:
       - "dependencies"
-    target-branch: "develop"
+    target-branch: "main"
     allow:
-      - dependency-type: "all"      
+      - dependency-type: "all"
+    ignore:
+      - dependency-name: "*"
+    open-pull-requests-limit: 0
