@@ -5,8 +5,25 @@
 
 version: 2
 updates:
-  - package-ecosystem: "gomod" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Security updates for production dependencies in the develop branch
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    pull-request-branch-name:
+      separator: "-"
+    assignees:
+      - "gerrymiller"
+    labels:
+      - "dependencies"
+    target-branch: "develop"
+    allow:
+      - dependency-type: "all"
+    security-updates: true
+
+  # Regular updates for production dependencies in the develop branch
+  - package-ecosystem: "gomod"
+    directory: "/"
     schedule:
       interval: "weekly"
     pull-request-branch-name:
@@ -15,3 +32,37 @@ updates:
       - "gerrymiller"
     labels:
       - "dependencies"
+    target-branch: "develop"
+    allow:
+      - dependency-type: "all"
+
+  # Security updates for development dependencies in the develop branch
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    pull-request-branch-name:
+      separator: "-"
+    assignees:
+      - "gerrymiller"
+    labels:
+      - "dependencies"
+    target-branch: "develop"
+    allow:
+      - dependency-type: "all"
+    security-updates: true
+
+  # Regular updates for development dependencies in the develop branch
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+        pull-request-branch-name:
+      separator: "-"
+    assignees:
+      - "gerrymiller"
+    labels:
+      - "dependencies"
+    target-branch: "develop"
+    allow:
+      - dependency-type: "all"      
