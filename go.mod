@@ -4,7 +4,7 @@ go 1.22.2
 
 require github.com/turbot/steampipe-plugin-sdk/v5 v5.10.1
 
-require golang.org/x/oauth2 v0.20.0
+require golang.org/x/oauth2 v0.21.0 // indirect
 
 require (
 	cloud.google.com/go v0.112.2 // indirect
