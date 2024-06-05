@@ -419,7 +419,7 @@ func listQBOCompanyInfo(
 
 	companyInfoApi := new(ApiCompanyInfo)
 	_, err := qboApiCall(&companyInfoApi,
-		"%s/v3/company/%s/companyinfo/%s",
+		"{{.baseURL}}/v3/company/{{.realmId}}/companyinfo/{{.realmId}}",
 		ctx,
 		d,
 		nil,

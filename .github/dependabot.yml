@@ -3,15 +3,38 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# TODO: look into groups
+
 version: 2
 updates:
-  - package-ecosystem: "gomod" # See documentation for possible values
-    directory: "/" # Location of package manifests
+  # Updates for the develop branch
+  - package-ecosystem: "gomod"
+    directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
     pull-request-branch-name:
       separator: "-"
     assignees:
       - "gerrymiller"
     labels:
       - "dependencies"
+    target-branch: "develop"
+    open-pull-requests-limit: 10
+
+  # Updates for the main branch
+  - package-ecosystem: "gomod"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    pull-request-branch-name:
+      separator: "-"
+    assignees:
+      - "gerrymiller"
+    labels:
+      - "dependencies"
+    target-branch: "main"
+#   allow:
+#      - dependency-type: "all"
+#    ignore:
+#      - dependency-name: "*"
+    open-pull-requests-limit: 0
