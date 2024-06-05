@@ -3,9 +3,11 @@
 # Please see the documentation for all configuration options:
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
+# TODO: look into groups
+
 version: 2
 updates:
-  # Security updates for production dependencies in the develop branch
+  # Updates for the develop branch
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
@@ -18,23 +20,8 @@ updates:
       - "dependencies"
     target-branch: "develop"
     open-pull-requests-limit: 10
-    security-updates: true
 
-  # Regular updates for production dependencies in the develop branch
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    pull-request-branch-name:
-      separator: "-"
-    assignees:
-      - "gerrymiller"
-    labels:
-      - "dependencies"
-    target-branch: "develop"
-    open-pull-requests-limit: 10
-
-      # Security updates for production dependencies in the main branch
+  # Updates for the main branch
   - package-ecosystem: "gomod"
     directory: "/"
     schedule:
@@ -46,27 +33,8 @@ updates:
     labels:
       - "dependencies"
     target-branch: "main"
-    allow:
-      - dependency-type: "all"
-    ignore:
-      - dependency-name: "*"
-    open-pull-requests-limit: 0
-    security-updates: true
-
-  # Regular updates for production dependencies in the main branch
-  - package-ecosystem: "gomod"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    pull-request-branch-name:
-      separator: "-"
-    assignees:
-      - "gerrymiller"
-    labels:
-      - "dependencies"
-    target-branch: "main"
-    allow:
-      - dependency-type: "all"
-    ignore:
-      - dependency-name: "*"
+#   allow:
+#      - dependency-type: "all"
+#    ignore:
+#      - dependency-name: "*"
     open-pull-requests-limit: 0
