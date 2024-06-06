@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-next-line MD041 -->
 ![image](https://www.cloudticity.com/hubfs/Cloudticity_Logo_2020%20(1).png#keepProtocol)
 
 ![CodeQL](https://github.com/Cloudticity/steampipe-plugin-qbo/actions/workflows/codeql.yml/badge.svg)
