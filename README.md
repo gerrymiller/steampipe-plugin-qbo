@@ -1,7 +1,7 @@
 <!-- markdownlint-disable-next-line MD041 -->
 ![image](https://www.cloudticity.com/hubfs/Cloudticity_Logo_2020%20(1).png#keepProtocol)
 
-![CodeQL](https://github.com/Cloudticity/steampipe-plugin-qbo/actions/workflows/codeql.yml/badge.svg) ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/:user/:repo)
+![CodeQL](https://github.com/Cloudticity/steampipe-plugin-qbo/actions/workflows/codeql.yml/badge.svg) ![Libraries.io dependency status for GitHub repo](https://img.shields.io/librariesio/github/:Cloudticity/:steampipe-plugin-qbo)
 
 # Quickbooks Online Plugin for Steampipe
 
