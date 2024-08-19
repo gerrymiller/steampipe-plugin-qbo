@@ -1,8 +1,9 @@
 module github.com/Cloudticity/steampipe-plugin-qbo
 
 go 1.22.2
+toolchain go1.22.5
 
-require github.com/turbot/steampipe-plugin-sdk/v5 v5.10.1
+require github.com/turbot/steampipe-plugin-sdk/v5 v5.10.3
 
 require golang.org/x/oauth2 v0.21.0 // indirect
 
